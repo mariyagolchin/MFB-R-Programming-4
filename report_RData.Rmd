@@ -1,0 +1,63 @@
+---
+title: "Report_RData"
+author: "MariyaGolchinpour"
+date: "2022-11-24"
+output:
+  pdf_document: default
+  html_document:
+    df_print: paged
+---
+Download the MAF files for the following TCGA projects ACC, SARC, BRCA using the TCGABiolinks
+package in R.\
+(a) Save all datasets as RData files in the separate folders and files.\
+ for first part we get all ACC, SARC, BRCA data using the TCGABiolinks and save as RData.\
+ 
+ 
+```{r}
+library(maftools)
+```
+(b)Use the maftools package to plot three plots of your choice and save the figures (in PDF and
+PNG) in a neat folder structure.\
+
+for part b : load RData from part a and then plot different maftools plot.\
+ 
+# oncoplot
+
+load  ACC RData and the plot oncoplot
+
+```{r load RData plot oncoplot}
+name<- "ACC"
+input_name_path=paste0("inputs/maf/",name,"/",name,"_maf.RData")
+load(file.path(input_name_path), RData <- new.env() )
+laml <- read.maf(maf = RData$maf)
+oncoplot(maf = laml, top = 10)
+
+```
+
+## RainfallPlot
+
+load BRCA RData and then plot rainfallPlot
+
+```{r BRCA rainfallPlot}
+name<- "BRCA"
+input_name_path=paste0("inputs/maf/",name,"/",name,"_maf.RData")
+load(file.path(input_name_path), RData <- new.env() )
+laml <- read.maf(maf = RData$maf)
+rainfallPlot(maf = laml, detectChangePoints = TRUE, pointSize = 0.4)
+
+```
+
+## SARC plotmafSummary
+
+load SARC RData and then plot plotmafSummary
+
+```{r SARC plotmafSummary}
+name<- "SARC"
+input_name_path=paste0("inputs/maf/",name,"/",name,"_maf.RData")
+load(file.path(input_name_path), RData <- new.env() )
+laml <- read.maf(maf = RData$maf)
+plotmafSummary(maf = laml, rmOutlier = TRUE, addStat = 'median', dashboard = TRUE, titvRaw = FALSE)
+ 
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
